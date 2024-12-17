@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/templates/static/css/index.css">
+<style>
+body {
+  font-family: "Lato", sans-serif;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+.ms-custom{
+  margin-left: 16rem;
+}
+</style>
+</head>
+<body>
+
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="#">Home</a>
+  <a href="#" id="addCardLink" data-bs-toggle="modal" data-bs-target="#addcard">Add Card</a>
+  <a href="/faculty">Faculties</a>
+  <a href="/subjects">Subjects</a>
+
+
+</div>
+
+<div id="main">
+  <span style="font-size:30px;cursor:pointer; vertical-align: middle;" onclick="openNav()">&#9776;</span>
+  <div class="container text-center ms-custom" style="display: inline-block; vertical-align: middle;">
+    <span style="font-size: 40px;">Acadamic Performance Analyser</span>
+  </div>
+
+
+<br>
+<div class="bg-primary" style="height: 5px;">.</div>
+<div class="container-fluid">
+	<div class="row">
+            {% for batch in batches %}
+            <div class="col">
+                <div class="weather-card one rounded">
+                    <div class="top">
+                        <div class="wrapper">
+                            <div class="mynav">
+                                <a href="javascript:;"><span class="lnr lnr-chevron-left"></span></a>
+                                <a href="javascript:;"><span class="lnr lnr-cog"></span></a>
+                            </div>
+                            <h1 class="heading">{{ batch.batch }}</h1>
+                            <h3 class="location">Class Incharge:{{ batch.class_incharge }}</h3>
+                            <br>
+                            <h5 class="card-text text-white">Tutors</h5>
+                            <div class="row">
+                              <div class="col">
+                                <span class="card-text text-white">{{batch.tutor1}}</span>
+                              </div>
+                              <div class="col">
+                                <span class="card-text text-white">{{batch.tutor2}}</span>
+                              </div>
+                              <div class="col">
+                                <span class="card-text text-white">{{batch.tutor3}}</span>
+                              </div>
+                            </div>
+                            <br>
+                            <span class="card-text text-white">Current Semester</span>
+                            <p class="temp">
+                                <span class="temp-value">%</span>
+                            </p>
+                            <span class="regulation text-white ">
+                                Number of Students: {{ batch.no_of_students }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="bottom">
+                        <div class="wrapper">
+						<ul class="forecast">
+							<a href="javascript:;"><span class="lnr lnr-chevron-up go-up"></span></a>
+							<li class="active">
+								<span class="date">Previous Semester</span>
+								<span class="lnr lnr-sun condition">
+									<span class="temp">75<span class="deg"></span><span class="temp-type">%</span></span>
+								</span>
+							</li>
+							<li>
+								<span class="date">Previous Previous Semester</span>
+								<span class="lnr lnr-cloud condition">
+									<span class="temp">74<span class="deg"></span><span class="temp-type">%</span></span>
+								</span>
+							</li>
+							
+							
+						</ul>
+					</div>
+					<div class="d-grid gap-3">
+						<button class="btn btn-primary btn-block mb-5 2ndyearbtn" id="uploadsemresult" data-bs-toggle="modal" data-bs-target="#uploadres">
+							Upload Results
+						</button>
+					</div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+<!-- modal start -->
+
+<!-- Modal 2ndyear Start-->
+
+
+<!-- Modal 3year start -->
+<div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal 3rd Year</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Modal content goes here -->
+                This is the modal content. You can add any HTML content here.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <!-- Add additional buttons if needed -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal 3rd year end -->
+
+<!-- Modal 4th year start -->
+
+<div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal 4th Year</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Modal content goes here -->
+                This is the modal content. You can add any HTML content here.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <!-- Add additional buttons if needed -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 4th year end -->
+
+<!-- Modal to start addcard -->
+<div class="modal modal-lg" id="addcard" tabindex="-1">
+	<div class="modal-dialog">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title">Add Batch</h5>
+		  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		</div>
+		<form id="addCardForm"> <!-- Added form element with ID -->
+		  <div class="modal-body">
+			  <div class="mb-3">
+				<label for="year" class="form-label">Year</label>
+				<input type="text" class="form-control" id="year" name="year" placeholder="Enter year"> <!-- Added name attribute -->
+			  </div>
+			  <div class="mb-3">
+				<label for="batch" class="form-label">Batch</label>
+				<input type="text" class="form-control" id="batch" name="batch" placeholder="Enter batch"> <!-- Added name attribute -->
+			  </div>
+			  <div class="row">
+          <!-- First Column -->
+          <div class="col mb-3">
+            <label for="incharge" class="form-label">Incharge</label>
+            <select class="form-select" id="incharge" name="incharge">
+              <option selected>Select Incharge</option>
+              <option value="Ms.Gowthami">Ms.Gowthami</option>
+              <option value="Ms.Ramya">Ms.Ramya</option>
+              <option value="Mr.Raja gopal">Mr.Raja gopal</option>
+              <option value="Ms.Suguna">Ms.Suguna</option>
+              <option value="Mr.Chitambaram">Mr.Chitambaram</option>
+              <option value="Ms.Madhu">Ms.Madhu</option>
+              <option value="Ms.Santhi">Ms.Santhi</option>
+              <option value="Mr.Mani Megalai">Mr.Mani Megalai</option>
+            </select>
+          </div>
+          <!-- Second Column -->
+          <div class="col mb-3">
+            <label for="tutor1" class="form-label">Tutor1</label>
+            <select class="form-select" id="tutor1" name="tutor1">
+              <option selected>Select Tutor1</option>
+              <option value="Ms.Gowthami">Ms.Gowthami</option>
+              <option value="Ms.Ramya">Ms.Ramya</option>
+              <option value="Mr.Raja gopal">Mr.Raja gopal</option>
+              <option value="Ms.Suguna">Ms.Suguna</option>
+              <option value="Mr.Chitambaram">Mr.Chitambaram</option>
+              <option value="Ms.Madhu">Ms.Madhu</option>
+              <option value="Ms.Santhi">Ms.Santhi</option>
+              <option value="Mr.Mani Megalai">Mr.Mani Megalai</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <!-- Third Column -->
+          <div class="col mb-3">
+            <label for="tutor2" class="form-label">Tutor2</label>
+            <select class="form-select" id="tutor2" name="tutor2">
+              <option selected>Select Tutor2</option>
+              <option value="Ms.Gowthami">Ms.Gowthami</option>
+              <option value="Ms.Ramya">Ms.Ramya</option>
+              <option value="Mr.Raja gopal">Mr.Raja gopal</option>
+              <option value="Ms.Suguna">Ms.Suguna</option>
+              <option value="Mr.Chitambaram">Mr.Chitambaram</option>
+              <option value="Ms.Madhu">Ms.Madhu</option>
+              <option value="Ms.Santhi">Ms.Santhi</option>
+              <option value="Mr.Mani Megalai">Mr.Mani Megalai</option>
+            </select>
+          </div>
+          <!-- Fourth Column -->
+          <div class="col mb-3">
+            <label for="tutor3" class="form-label">Tutor3</label>
+            <select class="form-select" id="tutor3" name="tutor3">
+              <option selected>Select Tutor3</option>
+              <option value="Ms.Gowthami">Ms.Gowthami</option>
+              <option value="Ms.Ramya">Ms.Ramya</option>
+              <option value="Mr.Raja gopal">Mr.Raja gopal</option>
+              <option value="Ms.Suguna">Ms.Suguna</option>
+              <option value="Mr.Chitambaram">Mr.Chitambaram</option>
+              <option value="Ms.Madhu">Ms.Madhu</option>
+              <option value="Ms.Santhi">Ms.Santhi</option>
+              <option value="Mr.Mani Megalai">Mr.Mani Megalai</option>
+            </select>
+          </div>
+        </div>
+        
+			  <div class="mb-3">
+				<label for="numberOfStudents" class="form-label">Number of Students</label>
+				<input type="number" class="form-control" id="numberOfStudents" name="numberOfStudents" placeholder="Enter number of students"> <!-- Added name attribute -->
+			  </div
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			<button type="button" onclick="addcards()" class="btn btn-primary">Add</button> <!-- Changed to submit button -->
+		  </div>
+		</form>
+	  </div>
+	</div>
+  </div>
+  </div>
+  
+
+
+<!-- Modal to end addcard -->
+
+
+<!-- modal for upload result start -->
+
+<div class="modal modal-lg" id="uploadres" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Upload Results</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Form for uploading result -->
+        <form id="uploadForm">
+          <div class="mb-3">
+              <label for="batch" class="form-label">Batch</label>
+              <select class="form-select" id="Batch" required>
+                <option value="nothing">Select Batch</option>
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+              <!-- Add more batch options as needed -->
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="semester" class="form-label">Semester</label>
+            <select class="form-select" id="semester" required>
+              <option value="">Select Semester</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <!-- Add more semester options as needed -->
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="file" class="form-label">Upload Excel File</label>
+            <input type="file" class="form-control" id="file" accept=".xls,.xlsx" required>
+            <div id="fileHelp" class="form-text">Please upload only Excel files.</div>
+          </div>
+        </form>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="uploadBtn">Upload</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal for upload results end -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-r5lZAN2SNXnpIV0oXuDIOZeZP4lMntzbk2LtlOVnXFfx3l0Z+0aAmzV9vGpIHzab" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+</body>
+</html>
+
+
+<script>
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+  document.getElementById("main").style.marginLeft= "0";
+}
+</script>
+
+
+<!-- add cards AJAX -->
+<script>
+	function addcards() {
+    // Gather form data
+    var formData = {
+        year: $("#year").val(),
+        batch: $("#batch").val(),
+        incharge: $("#incharge").val(), // Updated to match select element id
+        tutor1: $("#tutor1").val(), // Updated to match select element id
+        tutor2: $("#tutor2").val(), // Updated to match select element id
+        tutor3: $("#tutor3").val(), // Updated to match select element id
+        numberOfStudents: $("#numberOfStudents").val(),
+    };
+
+    console.log("Form Data:", formData); // Log form data
+
+    // Send AJAX request
+    $.ajax({
+        type: "POST",
+        url: "/batch",
+        data: formData,
+        dataType: "json",
+        encode: true
+    }).done(function(response) {
+            console.log("Response:", response); // Log response
+            // Handle success response
+            if (response === "Done") {
+                $('#addcard').modal('hide'); // Close the modal
+				        location.reload();
+            } else {
+                alert("Unknown response received: " + response);
+            }
+        }).fail(function(xhr, status, error) {
+            console.error(xhr.responseText);
+            // Handle error response
+            alert("Error adding batch: " + xhr.responseText);
+        });
+    }
+
+</script>
+
+
+<!-- excel sheet upload ajax -->
+
+<script>
+  $(document).ready(function() {
+    // When the upload button is clicked
+    $("#uploadBtn").click(function() {
+      // Create a FormData object to store form data
+      var formData = new FormData();
+      formData.append("batch", $("#Batch").val()); // Make sure you're appending the batch value
+      formData.append("semester", $("#semester").val());
+      formData.append("file", $("#file")[0].files[0])
+
+      // Send a POST request to the FastAPI endpoint
+      $.ajax({
+        type: "POST",
+        url: "/upload/", // Change the URL to match your FastAPI endpoint
+        data: formData, // Pass the form data
+        contentType: false, // Ensure that jQuery doesn't add a Content-Type header
+        processData: false, // Prevent jQuery from automatically processing the form data
+        success: function(response) {
+          // Handle the success response from the server
+          console.log(response);
+          // You can update the UI accordingly, for example, show a success message or redirect the user
+        },
+        error: function(xhr, status, error) {
+          // Handle errors here
+          console.error(xhr.responseText);
+          // You can show an error message to the user
+        }
+      });
+    });
+  });
+</script>
+
+
+   
+</body>
+</html> 

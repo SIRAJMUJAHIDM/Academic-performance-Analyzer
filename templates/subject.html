@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+</head>
+<body>
+    <div id="">
+        <div class="container text-center" style=" vertical-align: middle;">
+          <span style="font-size: 40px;"><b>Acadamic Performance Analyser</b></span>
+        </div>
+
+        <div class="bg-primary" style="height: 5px;">.</div>
+        <br>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-success float-end me-5" id="addSubjectBtn" data-bs-toggle="modal" data-bs-target="#addSubjectModal">
+                        <pre style="display: inline;font-size: 22px;">+</pre>
+                        <pre style="display: inline;"> </pre> Add Subjects
+                      </button>                      
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="container-fluid">
+            <table class="table table-bordered">
+                <thead class="table-warning">
+                    <tr>
+                        <th>S.No</th>
+                        <th>Subject Code</th>
+                        <th>Subject Name</th>
+                        <th>semester</th>
+                        <th>Credits</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  {% for subject in subjects %}
+                  <tr>
+                      <td>{{ loop.index }}</td>
+                      <td>{{ subject.subject_Code }}</td>
+                      <td>{{ subject.Subject_Name }}</td>
+                      <td>{{ subject.semester }}</td>
+                      <td>{{ subject.credits }}</td>
+                      <td>
+                          <div class="action">
+                            <a href="javascript:void(0)" class="btn edit-btn" class="btn edit-btn" data-bs-toggle="modal" data-bs-target="#editSubjectModal" onclick="populateEditModal({{subject.id}})">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill text-primary" viewBox="0 0 16 16" >
+                                  <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+                              </svg>
+                          </a>
+                          </div>
+                      </td>
+                      <td>
+                          <div class="action">
+                            <a href="javascript:void(0)" class="btn del-btn" onclick="deleteSubject({{subject.id}})">                                              
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill text-danger" viewBox="0 0 16 16" >
+                                  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                              </svg>
+                          </a>
+                          </div>
+                      </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>    
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-r5lZAN2SNXnpIV0oXuDIOZeZP4lMntzbk2LtlOVnXFfx3l0Z+0aAmzV9vGpIHzab" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+
+    <!-- Modal start add subject -->
+
+    <!-- Modal -->
+<div class="modal fade" id="addSubjectModal" tabindex="-1" aria-labelledby="addSubjectModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addSubjectModalLabel">Add Subjects</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+                <label for="semester" class="form-label">Semester</label>
+                <select class="form-select" id="semester">
+                  <option selected disabled>Select Semester</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+
+                </select>
+              </div>
+            <div class="mb-3">
+              <label for="subjectCode" class="form-label">Subject Code</label>
+              <input type="text" class="form-control" id="subjectCode" placeholder="Enter Subject Code">
+            </div>
+            <div class="mb-3">
+              <label for="subjectName" class="form-label">Subject Name</label>
+              <input type="text" class="form-control" id="subjectName" placeholder="Enter Subject Name">
+            </div>
+            <div class="mb-3">
+              <label for="credits" class="form-label">Credits</label>
+              <select class="form-select" id="credits">
+                <option selected disabled>Select Credits</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="addSubject()">Add Subjects</button>
+        </div>
+      </div>
+    </div>
+</div>
+  
+
+    <!-- Modal end add subject-->
+
+    <!-- modal edit start -->
+
+    <div class="modal fade" id="editSubjectModal" tabindex="-1" aria-labelledby="editSubjectModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editSubjectModalLabel">Edit Subjects</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                  <label for="semester" class="form-label">Semester</label>
+                  <select class="form-select" id="semester1">
+                    <option selected disabled>Select Semester</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+  
+                  </select>
+                </div>
+              <div class="mb-3">
+                <label for="subjectCode" class="form-label">Subject Code</label>
+                <input type="text" class="form-control" id="subjectCode1" placeholder="Enter Subject Code">
+              </div>
+              <div class="mb-3">
+                <label for="subjectName" class="form-label">Subject Name</label>
+                <input type="text" class="form-control" id="subjectName1" placeholder="Enter Subject Name">
+              </div>
+              <div class="mb-3">
+                <label for="credits" class="form-label">Credits</label>
+                <select class="form-select" id="credits1">
+                  <option selected disabled>Select Credits</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" onclick="updateSubject()">Edit Subjects</button>
+          </div>
+        </div>
+      </div>
+  </div>
+
+    <!-- moal edit end -->
+  
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  function addSubject() {
+    // Get form data
+    var formData = new FormData();
+    formData.append('subject_name', $("#subjectName").val());
+    formData.append('semester', $("#semester").val());
+    formData.append('subject_code', $("#subjectCode").val());
+    formData.append('credits', $("#credits").val());
+
+    // Send AJAX POST request
+    $.ajax({
+        type: "POST",
+        url: "/add_subject",
+        data: formData,
+        processData: false,  // Don't process data (already FormData)
+        contentType: false,  // Don't set content type (FormData will set it automatically)
+        success: function(response) {
+            console.log("Subject added successfully");
+            location.reload();  // Reload the page after successful addition
+        },
+        error: function(xhr, status, error) {
+            console.error("Error adding subject: " + xhr.responseText);
+            // Optionally, display error message or handle failure
+        }
+    });
+}
+</script>
+
+
+<script>
+  var id;
+  function populateEditModal(subjectId) {
+    // Send AJAX GET request to fetch subject d
+    id=subjectId;
+    $.ajax({
+        type: "GET",
+        url: `/get_subject/${subjectId}`, // Replace with your actual endpoint to fetch subject by ID
+        success: function(response) {
+            // Populate the edit modal form fields with fetched data
+            $("#editSubjectModal #subjectName1").val(response.Subject_Name);
+            $("#editSubjectModal #semester1").val(response.semester);
+            $("#editSubjectModal #subjectCode1").val(response.subject_Code);
+            $("#editSubjectModal #credits1").val(response.credits);
+        },
+        error: function(xhr, status, error) {
+            console.error("Error fetching subject details: " + xhr.responseText);
+        }
+    });
+  }
+</script>
+<script>
+function updateSubject() {
+  // Get the values from the form
+  var semester = document.getElementById("semester1").value;
+  var subjectCode = $("#subjectCode1").val();
+  var subjectName = $("#subjectName1").val();
+  var credits = $("#credits1").val();
+
+  // Data to be sent in the request body
+  var Fdata = {
+    semester: semester,
+    subject_code: subjectCode,
+    subject_name: subjectName,
+    credits: credits
+  };
+  console.log(Fdata);
+  // URL to send the PUT request to
+  var url = `/update_subject/${id}`; // Replace this with your actual API endpoint URL
+
+  // Send the AJAX request
+  $.ajax({
+    url: url,
+    type: 'PUT',
+    data: Fdata, // Pass the object directly
+    success: function(response) {
+      // Handle success response
+      console.log('Success:', response);
+      // Optionally, do something after the update is successful, like showing a success message or refreshing the page
+    },
+    error: function(xhr, status, error) {
+      // Handle error
+      console.error('Error:', error);
+      // Optionally, display an error message to the user
+    }
+  });
+}
+
+</script>
+
+<script>
+  function deleteSubject(subjectId) {
+  // URL for the delete request
+  var url = `/delete_subject/${subjectId}`; // Replace this with your actual API endpoint URL
+
+  // Send the AJAX request
+  $.ajax({
+    url: url,
+    type: 'DELETE',
+    success: function(response) {
+      // Handle success response
+      console.log('Success:', response);
+      location.reload();
+      // Optionally, do something after the delete is successful, like showing a success message or refreshing the page
+    },
+    error: function(xhr, status, error) {
+      // Handle error
+      console.error('Error:', error);
+      // Optionally, display an error message to the user
+    }
+  });
+}
+</script>
+
+</html>
